@@ -1,0 +1,473 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to the MyŠkoda Public API",
+        "description": "Create an API key in the MyŠkoda app (Settings → API keys, app version 8.16 or newer, see {url}) and select the vehicles it may access. The API has no vehicle list, so also enter the VIN of every vehicle covered by the key.",
+        "data": {
+          "api_key": "API key",
+          "vins": "VIN(s)"
+        },
+        "data_description": {
+          "api_key": "The API key generated in the MyŠkoda app.",
+          "vins": "17-character Vehicle Identification Number. Separate several VINs with commas."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Renew the API key",
+        "description": "The API key for {title} has expired or was revoked. Create a new key in the MyŠkoda app ({url}) for the same vehicles and enter it below.",
+        "data": {
+          "api_key": "API key"
+        },
+        "data_description": {
+          "api_key": "The new API key generated in the MyŠkoda app."
+        }
+      },
+      "reconfigure": {
+        "title": "Change API key or vehicles",
+        "description": "Create an API key in the MyŠkoda app (Settings → API keys, app version 8.16 or newer, see {url}) and select the vehicles it may access. The API has no vehicle list, so also enter the VIN of every vehicle covered by the key.",
+        "data": {
+          "api_key": "API key",
+          "vins": "VIN(s)"
+        },
+        "data_description": {
+          "api_key": "The API key generated in the MyŠkoda app.",
+          "vins": "17-character Vehicle Identification Number. Separate several VINs with commas."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the MyŠkoda Public API.",
+      "invalid_auth": "The API key was rejected.",
+      "api_key_expired": "The API key has expired. Create a new one in the MyŠkoda app.",
+      "vehicle_not_authorized": "The API key does not cover vehicle {vin}. Select it when creating the key.",
+      "vehicle_not_found": "No vehicle found for VIN {vin}.",
+      "invalid_vin": "{vin} is not a valid 17-character VIN.",
+      "no_vins": "Enter at least one VIN.",
+      "rate_limited": "Too many requests. Wait a minute and try again.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "These vehicles are already configured.",
+      "vehicle_already_configured": "One of these vehicles is already configured in another entry.",
+      "reauth_successful": "The API key was updated.",
+      "reconfigure_successful": "The configuration was updated."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "SkodaLink options",
+        "data": {
+          "scan_interval": "Polling interval",
+          "spin": "S-PIN"
+        },
+        "data_description": {
+          "scan_interval": "How often to read the vehicle state, in minutes. The API key has a rate limit, so avoid very short intervals.",
+          "spin": "Security PIN from the MyŠkoda app. Only needed to start the auxiliary heating from the switch."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "lock": {
+        "name": "Lock"
+      },
+      "doors": {
+        "name": "Doors"
+      },
+      "windows": {
+        "name": "Windows"
+      },
+      "trunk": {
+        "name": "Trunk"
+      },
+      "bonnet": {
+        "name": "Bonnet"
+      },
+      "sunroof": {
+        "name": "Sunroof"
+      },
+      "lights": {
+        "name": "Lights"
+      },
+      "parked": {
+        "name": "In motion"
+      },
+      "charging": {
+        "name": "Charging"
+      },
+      "plug_connected": {
+        "name": "Charging cable"
+      },
+      "plug_locked": {
+        "name": "Charging cable lock"
+      },
+      "in_saved_location": {
+        "name": "At saved charging location"
+      },
+      "charging_care_mode": {
+        "name": "Charging care mode"
+      },
+      "auto_unlock_plug": {
+        "name": "Auto-unlock cable when charged"
+      },
+      "window_heating_front": {
+        "name": "Front window heating"
+      },
+      "window_heating_rear": {
+        "name": "Rear window heating"
+      },
+      "air_conditioning_without_external_power": {
+        "name": "Climatisation without external power"
+      },
+      "air_conditioning_at_unlock": {
+        "name": "Climatisation at unlock"
+      }
+    },
+    "button": {
+      "refresh": {
+        "name": "Refresh data"
+      }
+    },
+    "climate": {
+      "air_conditioning": {
+        "name": "Air conditioning"
+      }
+    },
+    "device_tracker": {
+      "location": {
+        "name": "Location"
+      }
+    },
+    "image": {
+      "render": {
+        "name": "Vehicle image"
+      }
+    },
+    "number": {
+      "charge_limit": {
+        "name": "Charge limit"
+      }
+    },
+    "select": {
+      "charge_mode": {
+        "name": "Charge mode",
+        "state": {
+          "manual": "Manual",
+          "timer": "Timer",
+          "timer_charging_with_climatisation": "Timer with climatisation",
+          "preferred_charging_times": "Preferred charging times",
+          "only_own_current": "Only own current",
+          "immediate_discharging": "Immediate discharging",
+          "home_storage_charging": "Home storage charging"
+        }
+      }
+    },
+    "sensor": {
+      "odometer": {
+        "name": "Odometer"
+      },
+      "total_range": {
+        "name": "Total range"
+      },
+      "fuel_level": {
+        "name": "Fuel level"
+      },
+      "combustion_range": {
+        "name": "Combustion range"
+      },
+      "adblue_range": {
+        "name": "AdBlue range"
+      },
+      "car_type": {
+        "name": "Powertrain",
+        "state": {
+          "hybrid": "Hybrid",
+          "gasoline": "Petrol",
+          "diesel": "Diesel",
+          "cng": "CNG",
+          "lpg": "LPG",
+          "electric": "Electric",
+          "unknown": "Unknown"
+        }
+      },
+      "electric_range": {
+        "name": "Electric range"
+      },
+      "battery_level": {
+        "name": "Battery level"
+      },
+      "charging_state": {
+        "name": "Charging state",
+        "state": {
+          "connect_cable": "Cable not connected",
+          "charging": "Charging",
+          "conserving": "Conserving",
+          "ready_for_charging": "Ready for charging",
+          "discharging": "Discharging",
+          "charging_interrupted": "Charging interrupted"
+        }
+      },
+      "charge_type": {
+        "name": "Charge type",
+        "state": {
+          "ac": "AC",
+          "dc": "DC",
+          "off": "Off"
+        }
+      },
+      "charging_power": {
+        "name": "Charging power"
+      },
+      "charging_rate": {
+        "name": "Charging rate"
+      },
+      "remaining_charging_time": {
+        "name": "Remaining charging time"
+      },
+      "fully_charged_at": {
+        "name": "Fully charged at"
+      },
+      "target_state_of_charge": {
+        "name": "Target state of charge"
+      },
+      "charge_mode": {
+        "name": "Charge mode",
+        "state": {
+          "manual": "Manual",
+          "timer": "Timer",
+          "timer_charging_with_climatisation": "Timer with climatisation",
+          "preferred_charging_times": "Preferred charging times",
+          "only_own_current": "Only own current",
+          "immediate_discharging": "Immediate discharging",
+          "home_storage_charging": "Home storage charging"
+        }
+      },
+      "max_charge_current": {
+        "name": "Maximum AC charging current"
+      },
+      "charging_profile": {
+        "name": "Charging profile"
+      },
+      "air_conditioning_state": {
+        "name": "Air conditioning state",
+        "state": {
+          "off": "Off",
+          "cooling": "Cooling",
+          "heating": "Heating",
+          "heating_auxiliary": "Heating (auxiliary)",
+          "ventilation": "Ventilation",
+          "completed": "Completed",
+          "unknown": "Unknown",
+          "unsupported": "Unsupported"
+        }
+      },
+      "air_conditioning_target_reached_at": {
+        "name": "Target temperature reached at"
+      },
+      "auxiliary_heating_state": {
+        "name": "Auxiliary heating state",
+        "state": {
+          "off": "Off",
+          "preheating": "Preheating",
+          "heating_auxiliary": "Heating",
+          "ventilation": "Ventilation",
+          "unknown": "Unknown",
+          "unsupported": "Unsupported"
+        }
+      },
+      "auxiliary_heating_target_temperature": {
+        "name": "Auxiliary heating target temperature"
+      },
+      "auxiliary_heating_duration": {
+        "name": "Auxiliary heating duration"
+      },
+      "active_ventilation_state": {
+        "name": "Active ventilation state",
+        "state": {
+          "off": "Off",
+          "preheating": "Preheating",
+          "ventilation": "Ventilation",
+          "unknown": "Unknown",
+          "unsupported": "Unsupported"
+        }
+      },
+      "parking_address": {
+        "name": "Parking address"
+      },
+      "last_captured": {
+        "name": "Last data from car"
+      },
+      "last_updated": {
+        "name": "Last API update"
+      },
+      "api_key_expires_at": {
+        "name": "API key expires"
+      },
+      "api_rate_limit_remaining": {
+        "name": "API requests remaining"
+      }
+    },
+    "switch": {
+      "charging": {
+        "name": "Charging"
+      },
+      "auxiliary_heating": {
+        "name": "Auxiliary heating"
+      },
+      "active_ventilation": {
+        "name": "Active ventilation"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "Authentication with the MyŠkoda Public API failed: {error}"
+    },
+    "vehicle_not_authorized": {
+      "message": "The API key does not cover vehicle {vin}."
+    },
+    "vehicle_not_found": {
+      "message": "Vehicle {vin} was not found."
+    },
+    "rate_limited": {
+      "message": "API rate limit reached; retry after {retry_after} s."
+    },
+    "update_failed": {
+      "message": "Error reading vehicle data: {error}"
+    },
+    "operation_forbidden": {
+      "message": "The vehicle refused the request: {error}"
+    },
+    "operation_not_possible": {
+      "message": "The vehicle cannot do this right now: {error}"
+    },
+    "command_rate_limited": {
+      "message": "The request was declined, try again later: {error}"
+    },
+    "command_failed": {
+      "message": "The request failed: {error}"
+    },
+    "spin_required": {
+      "message": "The S-PIN is required to start the auxiliary heating. Set it in the integration options or pass it to the action."
+    },
+    "device_not_found": {
+      "message": "No SkodaLink vehicle found for device {device_id}."
+    },
+    "profile_not_found": {
+      "message": "Charging profile {profile_id} not found."
+    }
+  },
+  "issues": {
+    "api_key_expiring": {
+      "title": "MyŠkoda API key expires soon",
+      "description": "The API key used by {title} expires on {expires}. Create a new key in the MyŠkoda app ({url}) and update it via the integration's Reconfigure option. When it expires you will be asked to re-authenticate."
+    }
+  },
+  "selector": {
+    "start_mode": {
+      "options": {
+        "heating": "Heating",
+        "ventilation": "Ventilation"
+      }
+    },
+    "max_charging_current": {
+      "options": {
+        "reduced": "Reduced",
+        "maximum": "Maximum"
+      }
+    }
+  },
+  "services": {
+    "start_air_conditioning": {
+      "name": "Start air conditioning",
+      "description": "Starts climatisation with optional settings.",
+      "fields": {
+        "device_id": {
+          "name": "Vehicle",
+          "description": "The vehicle."
+        },
+        "temperature": {
+          "name": "Target temperature",
+          "description": "Cabin target temperature."
+        },
+        "without_external_power": {
+          "name": "Without external power",
+          "description": "Allow climatisation when not connected to a charger."
+        }
+      }
+    },
+    "start_auxiliary_heating": {
+      "name": "Start auxiliary heating",
+      "description": "Starts the auxiliary (parking) heater.",
+      "fields": {
+        "device_id": {
+          "name": "Vehicle",
+          "description": "The vehicle."
+        },
+        "spin": {
+          "name": "S-PIN",
+          "description": "Security PIN. Defaults to the S-PIN stored in the options."
+        },
+        "temperature": {
+          "name": "Target temperature",
+          "description": "Cabin target temperature."
+        },
+        "duration": {
+          "name": "Duration",
+          "description": "How long the heater runs, in minutes."
+        },
+        "start_mode": {
+          "name": "Start mode",
+          "description": "Heat or only ventilate."
+        }
+      }
+    },
+    "update_charging_profile": {
+      "name": "Update charging profile",
+      "description": "Changes settings of a charging profile (saved charging location). Unspecified settings are kept.",
+      "fields": {
+        "device_id": {
+          "name": "Vehicle",
+          "description": "The vehicle."
+        },
+        "profile_id": {
+          "name": "Profile ID",
+          "description": "ID of the profile (see the Charging profile sensor attributes). Defaults to the profile at the vehicle's current location."
+        },
+        "target_state_of_charge": {
+          "name": "Target state of charge",
+          "description": "Charge limit for this location."
+        },
+        "max_charging_current": {
+          "name": "Maximum charging current",
+          "description": "Charging current used at this location."
+        },
+        "min_battery_state_of_charge_enabled": {
+          "name": "Immediate charging below minimum",
+          "description": "Charge immediately when the battery is below the minimum level."
+        },
+        "min_battery_state_of_charge": {
+          "name": "Minimum battery level",
+          "description": "Below this level the car charges immediately, regardless of timers."
+        },
+        "auto_unlock_plug": {
+          "name": "Auto-unlock cable",
+          "description": "Unlock the charging cable when charging has finished."
+        }
+      }
+    },
+    "refresh": {
+      "name": "Refresh",
+      "description": "Reads the latest vehicle state from the API.",
+      "fields": {
+        "device_id": {
+          "name": "Vehicle",
+          "description": "The vehicle."
+        }
+      }
+    }
+  }
+}
