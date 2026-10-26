@@ -1,0 +1,98 @@
+start_air_conditioning:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: skodalink
+    temperature:
+      selector:
+        number:
+          min: 16
+          max: 29.5
+          step: 0.5
+          unit_of_measurement: "°C"
+    without_external_power:
+      selector:
+        boolean:
+
+start_auxiliary_heating:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: skodalink
+    spin:
+      selector:
+        text:
+          type: password
+    temperature:
+      selector:
+        number:
+          min: 16
+          max: 29.5
+          step: 0.5
+          unit_of_measurement: "°C"
+    duration:
+      selector:
+        number:
+          min: 1
+          max: 60
+          unit_of_measurement: min
+    start_mode:
+      selector:
+        select:
+          translation_key: start_mode
+          options:
+            - heating
+            - ventilation
+
+update_charging_profile:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: skodalink
+    profile_id:
+      selector:
+        number:
+          min: 0
+          max: 9999999999
+          mode: box
+    target_state_of_charge:
+      selector:
+        number:
+          min: 50
+          max: 100
+          step: 10
+          unit_of_measurement: "%"
+    max_charging_current:
+      selector:
+        select:
+          translation_key: max_charging_current
+          options:
+            - reduced
+            - maximum
+    min_battery_state_of_charge_enabled:
+      selector:
+        boolean:
+    min_battery_state_of_charge:
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 10
+          unit_of_measurement: "%"
+    auto_unlock_plug:
+      selector:
+        boolean:
+
+refresh:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: skodalink

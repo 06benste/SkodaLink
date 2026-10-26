@@ -1,0 +1,55 @@
+{
+  "vehicle": {
+    "vin": "TMBJB9NY5RF999999",
+    "name": "Superb",
+    "licensePlate": "AB12 CDE",
+    "renderUrl": "https://example.com/render.png",
+    "status": {
+      "overall": {
+        "doorsLocked": "YES",
+        "locked": "YES",
+        "doors": "CLOSED",
+        "windows": "CLOSED",
+        "lights": "OFF",
+        "reliableLockStatus": "LOCKED"
+      },
+      "detail": {"sunroof": "UNSUPPORTED", "trunk": "CLOSED", "bonnet": "CLOSED"},
+      "carCapturedTimestamp": "2026-10-26T08:00:00Z"
+    },
+    "fuelStatus": {
+      "carType": "GASOLINE",
+      "totalRangeInKm": 640,
+      "primaryEngineRange": {
+        "engineType": "GASOLINE",
+        "currentFuelLevelInPercent": 72,
+        "remainingRangeInKm": 640
+      },
+      "carCapturedTimestamp": "2026-10-26T08:00:00Z"
+    },
+    "odometer": {"mileageInKm": 18234, "carCapturedTimestamp": "2026-10-26T08:00:00Z"},
+    "parkingPosition": {
+      "state": "PARKED",
+      "gpsCoordinates": {"latitude": 51.5, "longitude": -0.12},
+      "formattedAddress": "1 Example Street, London, United Kingdom"
+    },
+    "airConditioning": {
+      "state": "OFF",
+      "targetTemperature": {"value": 21.5, "unit": "CELSIUS"},
+      "windowHeating": {"enabled": true, "front": "OFF", "rear": "OFF"},
+      "carCapturedTimestamp": "2026-10-26T08:00:00Z"
+    },
+    "auxiliaryHeating": {
+      "state": "OFF",
+      "startMode": "HEATING",
+      "durationInSeconds": 1200,
+      "targetTemperature": {"value": 22.0, "unit": "CELSIUS"}
+    },
+    "operations": [
+      {"name": "startAirConditioning"},
+      {"name": "stopAirConditioning"},
+      {"name": "startAuxiliaryHeating"},
+      {"name": "stopAuxiliaryHeating"}
+    ]
+  },
+  "errors": []
+}
