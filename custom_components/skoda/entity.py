@@ -4,7 +4,9 @@ from skoda_public_api.models.air_conditioning import AirConditioning
 from skoda_public_api.models.auxiliary_heating import AuxiliaryHeating
 from skoda_public_api.models.charging import Charging
 from skoda_public_api.models.driving_range import FuelStatus
+from skoda_public_api.models.parking_position import ParkingPosition
 from skoda_public_api.models.vehicle import Odometer, VehicleObject
+from skoda_public_api.models.vehicle_status import VehicleStatus
 
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -65,3 +67,13 @@ class SkodaEntity(CoordinatorEntity[SkodaUpdateCoordinator]):
     def open_api_auxiliary_heating(self) -> AuxiliaryHeating | None:
         """Returns main AuxiliaryHeating from new OpenAPI."""
         return self.coordinator.data.vehicle_response.vehicle.auxiliary_heating
+
+    @property
+    def open_api_status(self) -> VehicleStatus | None:
+        """Returns main VehicleStatus (doors, windows, locks) from new OpenAPI."""
+        return self.coordinator.data.vehicle_response.vehicle.status
+
+    @property
+    def open_api_parking_position(self) -> ParkingPosition | None:
+        """Returns main ParkingPosition from new OpenAPI."""
+        return self.coordinator.data.vehicle_response.vehicle.parking_position
