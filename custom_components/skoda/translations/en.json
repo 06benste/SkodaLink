@@ -29,7 +29,44 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "lock": {
+        "name": "Lock"
+      },
+      "doors": {
+        "name": "Doors"
+      },
+      "windows": {
+        "name": "Windows"
+      },
+      "trunk": {
+        "name": "Boot"
+      },
+      "bonnet": {
+        "name": "Bonnet"
+      },
+      "sunroof": {
+        "name": "Sunroof"
+      },
+      "lights": {
+        "name": "Lights"
+      },
+      "moving": {
+        "name": "Moving"
+      }
+    },
+    "device_tracker": {
+      "location": {
+        "name": "Location"
+      }
+    },
     "sensor": {
+      "ad_blue_range": {
+        "name": "AdBlue range"
+      },
+      "api_key_expiry": {
+        "name": "API key expiry"
+      },
       "aux_heating_duration": {
         "name": "Auxiliary heating remaining duration"
       },
@@ -72,6 +109,9 @@
       "fuel_level": {
         "name": "Fuel level"
       },
+      "last_updated": {
+        "name": "Last updated from car"
+      },
       "licence_plate": {
         "name": "Registration plate"
       },
@@ -80,6 +120,9 @@
       },
       "preset_temperature_value": {
         "name": "Target cabin temperature"
+      },
+      "rate_limit_remaining": {
+        "name": "API requests remaining"
       },
       "remaining_ac_time": {
         "name": "Air conditioning remaining time"

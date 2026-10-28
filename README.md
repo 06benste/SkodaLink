@@ -3,12 +3,31 @@
 A preview build of the upcoming **official Škoda integration** for Home Assistant, packaged as a
 custom component so you can test it before it ships in Home Assistant core.
 
-The code comes unchanged from the draft core pull request
+The base is the draft core pull request
 [home-assistant/core#181591](https://github.com/home-assistant/core/pull/181591) (commit `e97d0a1`),
 by Škoda Auto / Mobility Lab VŠB-TUO. It uses Škoda's official public Vehicle API through the
 [`skoda-public-api`](https://pypi.org/project/skoda-public-api/) library.
 
-Only the packaging changed for custom-component use:
+## Additions on top of the upstream PR
+
+The API already returns these fields on every poll, but the upstream integration doesn't use them.
+They're exposed here without any extra API calls:
+
+| Entity | Type | Shown when the car reports |
+|---|---|---|
+| Lock | binary sensor (on = unlocked) | vehicle status |
+| Doors, Windows | binary sensor (on = open) | vehicle status |
+| Boot, Bonnet | binary sensor (on = open) | vehicle status |
+| Sunroof | binary sensor (on = open) | a sunroof |
+| Lights | binary sensor | vehicle status |
+| Moving | binary sensor | parking position |
+| Location | device tracker (GPS, address attribute, car picture) | parking position |
+| AdBlue range | sensor | AdBlue range |
+| Last updated from car | diagnostic sensor | vehicle status |
+| API key expiry | diagnostic sensor | always |
+| API requests remaining | diagnostic sensor (disabled by default) | always |
+
+Packaging changes for custom-component use:
 
 - `strings.json` → `translations/en.json`, with the `[%key:common::…%]` references resolved
 - `manifest.json` has a `version` field and points to this repo; `quality_scale` was removed
@@ -34,8 +53,8 @@ Copy `custom_components/skoda` into `<config>/custom_components/skoda` and resta
 
 **Settings → Devices & services → Add integration → Škoda**, then enter the VIN and API key.
 
-The integration polls the API and only creates **sensors** (battery, range, charging, odometer,
-climate and auxiliary heating, etc.). It has no controls yet.
+The integration polls the API every 5 minutes. It creates sensors, binary sensors and a device
+tracker, depending on what your car reports. It has no controls yet.
 
 ## Notes
 

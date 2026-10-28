@@ -263,6 +263,31 @@ def _licence_plate_value(entity: SkodaEntity) -> str | None:
     return None
 
 
+def _ad_blue_range_value(entity: SkodaEntity) -> int | None:
+    driving_range = entity.open_api_driving_range
+    if driving_range is not None:
+        return driving_range.ad_blue_range
+    return None
+
+
+def _last_updated_value(entity: SkodaEntity) -> datetime | None:
+    status = entity.open_api_status
+    if status is None or status.car_captured_timestamp is None:
+        return None
+    return dt_util.parse_datetime(status.car_captured_timestamp)
+
+
+def _api_key_expiry_value(entity: SkodaEntity) -> datetime | None:
+    expires_at = entity.coordinator.openapi.api_key_expires_at
+    if expires_at is None:
+        return None
+    return dt_util.parse_datetime(expires_at)
+
+
+def _rate_limit_remaining_value(entity: SkodaEntity) -> int | None:
+    return entity.coordinator.openapi.rate_limit_remaining
+
+
 SENSOR_TYPES: tuple[SkodaSensorEntityDescription, ...] = (
     SkodaSensorEntityDescription(
         key="mileage",
@@ -392,6 +417,39 @@ SENSOR_TYPES: tuple[SkodaSensorEntityDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:alpha-r-box-outline",
         value_fn=_licence_plate_value,
+    ),
+    SkodaSensorEntityDescription(
+        key="ad_blue_range",
+        translation_key="ad_blue_range",
+        native_unit_of_measurement=UnitOfLength.KILOMETERS,
+        device_class=SensorDeviceClass.DISTANCE,
+        icon="mdi:water",
+        required_capabilities=frozenset({VehicleCapability.AD_BLUE_RANGE}),
+        value_fn=_ad_blue_range_value,
+    ),
+    SkodaSensorEntityDescription(
+        key="last_updated",
+        translation_key="last_updated",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        required_capabilities=frozenset({VehicleCapability.STATUS}),
+        value_fn=_last_updated_value,
+    ),
+    SkodaSensorEntityDescription(
+        key="api_key_expiry",
+        translation_key="api_key_expiry",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        icon="mdi:key-chain",
+        value_fn=_api_key_expiry_value,
+    ),
+    SkodaSensorEntityDescription(
+        key="rate_limit_remaining",
+        translation_key="rate_limit_remaining",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        icon="mdi:counter",
+        value_fn=_rate_limit_remaining_value,
     ),
 )
 
