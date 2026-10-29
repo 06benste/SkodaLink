@@ -27,6 +27,11 @@ They're exposed here without any extra API calls:
 | API key expiry | diagnostic sensor | always |
 | API requests remaining | diagnostic sensor (disabled by default) | always |
 
+The API only reports doors and windows as a whole (any open / all closed), plus the boot, bonnet
+and sunroof individually. It has no per-door or per-window fields. To see exactly what your car
+sends, use **Download diagnostics** on the integration: it saves the raw API response with the VIN,
+plate, location and API key removed.
+
 Packaging changes for custom-component use:
 
 - `strings.json` → `translations/en.json`, with the `[%key:common::…%]` references resolved
